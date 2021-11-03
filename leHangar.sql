@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mar. 02 nov. 2021 à 15:21
+-- Généré le : mer. 03 nov. 2021 à 11:29
 -- Version du serveur : 5.5.68-MariaDB
 -- Version de PHP : 8.0.12
 
@@ -18,21 +18,20 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `leHangar`
+-- Base de données : `dautecou5u`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Catégorie`
+-- Structure de la table `Categorie`
 --
 
-CREATE TABLE `Catégorie` (
+CREATE TABLE `Categorie` (
   `Id` int(11) NOT NULL,
-  `Nom` varchar(25) NOT NULL,
-  `Description` text NOT NULL,
-  `Id_Produit` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Nom` varchar(255) NOT NULL,
+  `Description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -42,25 +41,24 @@ CREATE TABLE `Catégorie` (
 
 CREATE TABLE `Commande` (
   `Id` int(11) NOT NULL,
-  `nom_client` varchar(25) NOT NULL,
-  `mail_client` varchar(50) NOT NULL,
-  `tel_client` int(10) NOT NULL,
-  `montant` double NOT NULL,
-  `etat` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Nom_client` varchar(25) NOT NULL,
+  `Mail_client` varchar(50) NOT NULL,
+  `Tel_client` int(10) NOT NULL,
+  `Montant` double NOT NULL,
+  `Etat` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Gérant`
+-- Structure de la table `Gerant`
 --
 
-CREATE TABLE `Gérant` (
+CREATE TABLE `Gerant` (
   `Id` int(11) NOT NULL,
-  `Mail` varchar(50) NOT NULL,
-  `Mdp` varchar(25) NOT NULL,
-  `Id_Commande` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Mail` varchar(255) NOT NULL,
+  `Mdp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -69,10 +67,10 @@ CREATE TABLE `Gérant` (
 --
 
 CREATE TABLE `Panier` (
-  `Id_Produit` int(11) NOT NULL,
+  `Id_produit` int(11) NOT NULL,
   `Id_Commande` int(11) NOT NULL,
-  `quantite` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Quantite` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -82,13 +80,11 @@ CREATE TABLE `Panier` (
 
 CREATE TABLE `Producteur` (
   `Id` int(11) NOT NULL,
-  `Nom` varchar(25) NOT NULL,
-  `Localisation` varchar(200) NOT NULL,
-  `Mail` varchar(100) NOT NULL,
-  `Mdp` varchar(25) NOT NULL,
-  `Id_Produit` int(11) NOT NULL,
-  `Id_Commande` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Nom` varchar(255) NOT NULL,
+  `Localisation` varchar(255) NOT NULL,
+  `Mail` varchar(255) NOT NULL,
+  `Mdp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -98,22 +94,23 @@ CREATE TABLE `Producteur` (
 
 CREATE TABLE `Produit` (
   `Id` int(11) NOT NULL,
-  `Nom` varchar(25) DEFAULT NULL,
-  `Description` text,
-  `Tarif_unitaire` double DEFAULT NULL,
-  `photo` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Id_Producteur` int(11) NOT NULL,
+  `Id_Categorie` int(11) NOT NULL,
+  `Nom` varchar(255) NOT NULL,
+  `Description` varchar(255) NOT NULL,
+  `Tarif_Unitaire` double NOT NULL,
+  `Photo` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Index pour les tables déchargées
 --
 
 --
--- Index pour la table `Catégorie`
+-- Index pour la table `Categorie`
 --
-ALTER TABLE `Catégorie`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `foreign_key_idProduit_Catégorie` (`Id_Produit`);
+ALTER TABLE `Categorie`
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Index pour la table `Commande`
@@ -122,49 +119,52 @@ ALTER TABLE `Commande`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Index pour la table `Gérant`
+-- Index pour la table `Gerant`
 --
-ALTER TABLE `Gérant`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Mail` (`Mail`),
-  ADD KEY `fk_gerant_commande` (`Id_Commande`);
+ALTER TABLE `Gerant`
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Index pour la table `Panier`
 --
 ALTER TABLE `Panier`
-  ADD KEY `fk_produit_commande` (`Id_Produit`),
-  ADD KEY `fk_commande_produit` (`Id_Commande`);
+  ADD KEY `Id_produit` (`Id_produit`),
+  ADD KEY `Id_Commande` (`Id_Commande`);
 
 --
 -- Index pour la table `Producteur`
 --
 ALTER TABLE `Producteur`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Mail` (`Mail`),
-  ADD KEY `foreign_key_idProduit_Producteur` (`Id_Produit`),
-  ADD KEY `fk_Producteur_Commande` (`Id_Commande`);
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Index pour la table `Produit`
 --
 ALTER TABLE `Produit`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `fk_Producteur` (`Id_Producteur`) USING BTREE,
+  ADD KEY `fk_Categorie` (`Id_Categorie`) USING BTREE;
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT pour la table `Catégorie`
+-- AUTO_INCREMENT pour la table `Categorie`
 --
-ALTER TABLE `Catégorie`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `Categorie`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `Commande`
 --
 ALTER TABLE `Commande`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `Gerant`
+--
+ALTER TABLE `Gerant`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -177,37 +177,25 @@ ALTER TABLE `Producteur`
 -- AUTO_INCREMENT pour la table `Produit`
 --
 ALTER TABLE `Produit`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `Catégorie`
---
-ALTER TABLE `Catégorie`
-  ADD CONSTRAINT `foreign_key_idProduit_Catégorie` FOREIGN KEY (`Id_Produit`) REFERENCES `Produit` (`Id`);
-
---
--- Contraintes pour la table `Gérant`
---
-ALTER TABLE `Gérant`
-  ADD CONSTRAINT `fk_gerant_commande` FOREIGN KEY (`Id_Commande`) REFERENCES `Commande` (`Id`);
-
---
 -- Contraintes pour la table `Panier`
 --
 ALTER TABLE `Panier`
-  ADD CONSTRAINT `fk_commande_produit` FOREIGN KEY (`Id_Commande`) REFERENCES `Commande` (`Id`),
-  ADD CONSTRAINT `fk_produit_commande` FOREIGN KEY (`Id_Produit`) REFERENCES `Produit` (`Id`);
+  ADD CONSTRAINT `Panier_ibfk_1` FOREIGN KEY (`Id_produit`) REFERENCES `Produit` (`Id`),
+  ADD CONSTRAINT `Panier_ibfk_2` FOREIGN KEY (`Id_Commande`) REFERENCES `Commande` (`Id`);
 
 --
--- Contraintes pour la table `Producteur`
+-- Contraintes pour la table `Produit`
 --
-ALTER TABLE `Producteur`
-  ADD CONSTRAINT `fk_Producteur_Commande` FOREIGN KEY (`Id_Commande`) REFERENCES `Commande` (`Id`),
-  ADD CONSTRAINT `foreign_key_idProduit_Producteur` FOREIGN KEY (`Id_Produit`) REFERENCES `Produit` (`Id`);
+ALTER TABLE `Produit`
+  ADD CONSTRAINT `Produit_ibfk_1` FOREIGN KEY (`Id_Producteur`) REFERENCES `Producteur` (`Id`),
+  ADD CONSTRAINT `Produit_ibfk_2` FOREIGN KEY (`Id_Categorie`) REFERENCES `Categorie` (`Id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
