@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 03 nov. 2021 à 14:54
+-- Généré le : mer. 03 nov. 2021 à 15:26
 -- Version du serveur : 5.5.68-MariaDB
 -- Version de PHP : 8.0.12
 
@@ -66,6 +66,7 @@ CREATE TABLE `Commande` (
 
 CREATE TABLE `Gerant` (
   `Id` int(11) NOT NULL,
+  `Nom` varchar(25) NOT NULL,
   `Mail` varchar(255) NOT NULL,
   `Mdp` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -74,9 +75,9 @@ CREATE TABLE `Gerant` (
 -- Déchargement des données de la table `Gerant`
 --
 
-INSERT INTO `Gerant` (`Id`, `Mail`, `Mdp`) VALUES
-(1, 'test.gérant@mail.com', '123123'),
-(2, 'chef@mail.com', '987987');
+INSERT INTO `Gerant` (`Id`, `Nom`, `Mail`, `Mdp`) VALUES
+(1, 'Etienne', 'test.gérant@mail.com', '123123'),
+(2, 'Laurent', 'chef@mail.com', '987987');
 
 -- --------------------------------------------------------
 
