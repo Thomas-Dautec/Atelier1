@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : mer. 03 nov. 2021 à 11:29
+-- Généré le : mer. 03 nov. 2021 à 14:54
 -- Version du serveur : 5.5.68-MariaDB
 -- Version de PHP : 8.0.12
 
@@ -33,6 +33,16 @@ CREATE TABLE `Categorie` (
   `Description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `Categorie`
+--
+
+INSERT INTO `Categorie` (`Id`, `Nom`, `Description`) VALUES
+(1, 'Légume', '**'),
+(2, 'Fruit', '**'),
+(3, 'Produits laitiers', '**'),
+(4, 'Viande', '**');
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +70,14 @@ CREATE TABLE `Gerant` (
   `Mdp` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `Gerant`
+--
+
+INSERT INTO `Gerant` (`Id`, `Mail`, `Mdp`) VALUES
+(1, 'test.gérant@mail.com', '123123'),
+(2, 'chef@mail.com', '987987');
+
 -- --------------------------------------------------------
 
 --
@@ -86,6 +104,15 @@ CREATE TABLE `Producteur` (
   `Mdp` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `Producteur`
+--
+
+INSERT INTO `Producteur` (`Id`, `Nom`, `Localisation`, `Mail`, `Mdp`) VALUES
+(1, 'Marchal', 'Nancy', 'marchal@mail.com', '123456'),
+(2, 'Dupond', 'Metz', 'dupond@mail.com', '147258'),
+(3, 'Thierry', 'Strasbourg', 'thierry@mail.com', '000000');
+
 -- --------------------------------------------------------
 
 --
@@ -101,6 +128,31 @@ CREATE TABLE `Produit` (
   `Tarif_Unitaire` double NOT NULL,
   `Photo` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `Produit`
+--
+
+INSERT INTO `Produit` (`Id`, `Id_Producteur`, `Id_Categorie`, `Nom`, `Description`, `Tarif_Unitaire`, `Photo`) VALUES
+(1, 2, 1, 'Salade', '**', 0.65, 'default.png\r\n'),
+(2, 2, 2, 'Fraise', '**', 1.2, 'default.png'),
+(3, 2, 2, 'Pomme', '**', 0.8, 'default.png'),
+(4, 1, 1, 'Carotte', '**', 0.75, 'default.png'),
+(5, 2, 2, 'Tomate', '**', 0.45, 'default.png'),
+(6, 2, 2, 'Abricot', '**', 1.25, 'default.png'),
+(7, 3, 4, 'Steak Haché', '**', 2.6, 'default.png'),
+(8, 3, 4, 'Entrecôte', '**', 6.8, 'default.png'),
+(9, 1, 2, 'Tomate', 'Bio', 1.4, 'default.png'),
+(10, 1, 3, 'Camembert', '**', 2.1, 'default.png'),
+(11, 1, 3, 'Emmental', '**', 2, 'default.png'),
+(12, 1, 1, 'Roquette', 'Bio', 1.35, 'default.png'),
+(13, 3, 4, 'Sauté de porc', '**', 4.2, 'default.png'),
+(14, 3, 4, 'Jambon blanc', '**', 2.6, 'default.png'),
+(15, 3, 4, 'Jambon de Parme', '**', 3.6, 'default.png'),
+(16, 1, 2, 'Fraise ', 'Bio', 3.8, 'default.png'),
+(17, 3, 4, 'Escalope de poulet', '**', 3.4, 'default.png'),
+(18, 3, 4, 'Merguez', '**', 2.3, 'default.png'),
+(19, 2, 3, 'Fromage blanc', '**', 3.1, 'default.png');
 
 --
 -- Index pour les tables déchargées
@@ -153,7 +205,7 @@ ALTER TABLE `Produit`
 -- AUTO_INCREMENT pour la table `Categorie`
 --
 ALTER TABLE `Categorie`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `Commande`
@@ -165,19 +217,19 @@ ALTER TABLE `Commande`
 -- AUTO_INCREMENT pour la table `Gerant`
 --
 ALTER TABLE `Gerant`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `Producteur`
 --
 ALTER TABLE `Producteur`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `Produit`
 --
 ALTER TABLE `Produit`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Contraintes pour les tables déchargées
