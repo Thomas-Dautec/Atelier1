@@ -36,7 +36,7 @@ class HangarAdminController extends \mf\control\AbstractController {
         
         if($hangar_auth->logged_in) {
             $prod = Producteur::select()->where('Mail','=',"$user_mail")->first();
-            $prod_commande = $prod->followedBy()->get();    ///corrigé folllowedBy
+            $prod_commande = $prod->lesProduits()->get();    ///corrigé folllowedBy
             
             $view_commandes = new HangarGestView($prod_commande);
             $view_commandes->render('viewHome');

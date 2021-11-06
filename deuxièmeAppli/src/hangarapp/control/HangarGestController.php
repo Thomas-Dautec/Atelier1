@@ -50,16 +50,27 @@ class HangarGestController extends \mf\control\AbstractController {
      * 
      */
     
-    public function viewHome(){
+    public function viewHome($id = null){
 
-        $commande = Commande::select()->from('Producteur AS p')
-            ->join('Produit AS prod','p.Id','prod.Id_Producteur')
-            ->join('Panier AS panier','prod.Id','panier.Id_Produit')
-            ->join('Commande AS cmd','panier.Id_Commande','cmd.Id');
+        $route = new Router();/*
+        $id_prod = $id ?? $this->request->get('Id');/*
+        $prod = Producteur::find($id_prod);
+        $vueProd = new HangarView($prod);
+*/
+        $commande = Commande::select('Commande.Id','Commande.Montant','Produit.Id','Produit.Nom'.'Panier.Quantite')
+            ->from('Commande', 'Produit','Panier')
+            ->join('Panier','Commande.Id','=','Panier.Id_Commande')
+            ->join('Produit','Panier.Id_Produit','=','prod.Id')
+            ->where('Produit.Id_Producteur','=',"3"); //////Identifiant producteur à revoir
         $vueCommande = new HangarGestView($commande);
         // echo $vueTweets->renderHome();
         echo $vueCommande->render('renderHome');
 
+/*        SELECT Commande.Id, Commande.Nom_client 
+FROM Commande 
+LEFT JOIN Panier ON Commande.Id = Panier.Id_Commande 
+LEFT JOIN Produit ON Panier.Id_Produit = Produit.Id 
+WHERE Produit.Id_Producteur = 2;*/
     }
 
 
@@ -82,7 +93,7 @@ class HangarGestController extends \mf\control\AbstractController {
         <div style='font-weight: bolder'>AUTHOR : <a href=" . $link_user . "> $author->username </a>\n</div>
         <div style='font-size: smaller'>Created at $tweet->created_at \n</div>
         <div style='font-size: smaller'>Score $tweet->score \n</div>";
-
+fol
         return $htmlTweet;*/
 
         $id_productor = $id ?? $this->request->get['Id'];

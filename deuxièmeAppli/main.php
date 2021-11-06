@@ -77,12 +77,15 @@ $router->addRoute('check_login',
                     '/check_login/',
                     '\hangarapp\control\HangarAdminController',
                     'CheckLogin',
-                    HangarAuthentification::ACCESS_LEVEL_NONE);
+                    HangarAuthentification::ACCESS_LEVEL_USER);
 /*
 $router->addRoute('productor',
                     '/productor/',
                    '\tweeterapp\control\TweeterController',
                    'viewProductor');*/
+
+$auth = new HangarAuthentification();
+//$auth->createUser("Henry", "Marseille", "henry@mail.com", "1999",100);
 
 $router->setDefaultRoute('/login/');
 $router->run();
@@ -92,7 +95,13 @@ $req = $produit::select();
 $lignes = $req->get();
 //echo $lignes;
 */
-
+$commande = new Commande();
+$req = $commande::select('c.Id','c.Montant','Produit.Nom','Panier.Quantite')
+            ->from('Commande AS c','Produit', 'Panier')
+            ->join('Panier','c.Id','=','Panier.Id_Commande')
+            ->join('Produit','Panier.Id_Produit','=','Produit.Id')
+            ->where('Produit.Id_Producteur','=','2');
+//echo $req->get();
 
 
 

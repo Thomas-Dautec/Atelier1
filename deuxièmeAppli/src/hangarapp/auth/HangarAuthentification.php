@@ -13,7 +13,7 @@ class HangarAuthentification extends \mf\auth\Authentification {
      *
      */
 
-    /* niveaux d'accès de TweeterApp 
+    /* niveaux d'accès de HangarApp 
      *
      * Le niveau USER correspond a un utilisateur inscrit avec un compte
      * Le niveau ADMIN est un plus haut niveau (non utilisé ici)
@@ -49,25 +49,25 @@ class HangarAuthentification extends \mf\auth\Authentification {
      * 
      */
     
-    public function createUser($username, $pass, $fullname,
+    public function createUser($nom, $local, $mail, $mdp,
                                $level=self::ACCESS_LEVEL_USER) {
 
         
-        if(User::select()->where('username','=',"$username")->exists()) {
+        if(Producteur::select()->where('Nom','=',"$nom")->exists()) {
             echo('DEBUG >>> user déjà existant \n');
             echo('DEBUG >>> user déjà existant \n');
-            $emess = "User $username already exists";
+            $emess = "User $nom already exists";
             throw new AuthentificationException($emess);
         } else {
             echo('DEBUG >>> user en création \n');
 
-            $new_user = new User();
+            $new_user = new Producteur();
 
-            $new_user->username = $username;
-            $new_user->password = $this->hashPassword($pass);
-            $new_user->fullname = $fullname;
+            $new_user->Nom = $nom;
+            $new_user->Localisation = $local;
+            $new_user->Mail = $mail;
+            $new_user->Mdp = $this->hashPassword($pass);
             $new_user->level= $level;
-            $new_user->followers= 0;
 
             $new_user->save();
 

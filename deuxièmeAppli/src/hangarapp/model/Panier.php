@@ -10,4 +10,7 @@ class Panier extends \Illuminate\Database\Eloquent\Model
        public    $timestamps = false;    /* si vrai la table doit contenir
                                             les deux colonnes updated_at,
                                             created_at */   
+
+
+       
 }

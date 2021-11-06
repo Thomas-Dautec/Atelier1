@@ -85,10 +85,10 @@ class Authentification extends AbstractAuthentification {
             }
             else{
                 $verify_password = false;
-            }
-        } /*else {
-            $verify_password = password_verify($password, $hash);
-        }*/
+            }/*
+        } else {
+            $verify_password = password_verify($password, $hash);*/
+        }
      
         return $verify_password;
     }
